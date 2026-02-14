@@ -1,6 +1,5 @@
 // --- Datos base ---
 
-// Tasas de observación por División (A)
 const tasasDivision = {
   "Medicina Interna": 0.828,
   "Cirugía": 1.337,
@@ -8,7 +7,6 @@ const tasasDivision = {
   "Pediatría": 9.259
 };
 
-// Servicios por División y factores de criticidad (B)
 const serviciosPorDivision = {
   "Medicina Interna": [
     { nombre: "Urgencias Adultos", factor: 1.50 },
@@ -47,7 +45,7 @@ const serviciosPorDivision = {
   ]
 };
 
-// --- Referencias al DOM ---
+// --- DOM ---
 const divisionSelect = document.getElementById("division");
 const servicioSelect = document.getElementById("servicio");
 const turnoSelect = document.getElementById("turno");
@@ -57,7 +55,7 @@ const diasHabilesInput = document.getElementById("dias-habiles");
 const btnCalcular = document.getElementById("btn-calcular");
 const resultadoDiv = document.getElementById("resultado");
 
-// --- Cargar servicios según División ---
+// --- Cargar servicios ---
 divisionSelect.addEventListener("change", () => {
   const division = divisionSelect.value;
   servicioSelect.innerHTML = "";
@@ -118,7 +116,6 @@ btnCalcular.addEventListener("click", () => {
 
   const factorCriticidad = servicioObj.factor;
 
-  // --- Cálculos ---
   const C = numPersonal * tasaObservacion;
   const D = C * factorCriticidad;
   const E = D / oportunidadesBloque;
@@ -126,15 +123,14 @@ btnCalcular.addEventListener("click", () => {
 
   const D_r = Math.ceil(D);
   const E_r = Math.ceil(E);
-  const F_r = Math.ceil(F);
 
   const textoResultado = `
     <p><strong>Resultado de la planeación operativa</strong></p>
 
     <p>
-      Para el turno <strong>${turno}</strong>, y con base en la información proporcionada,
-      será necesario realizar un total de <strong>${D_r}</strong> evaluaciones de higiene de manos
-      durante los próximos 30 días.
+      Para el servicio de <strong>${servicioNombre}</strong>, turno <strong>${turno}</strong>,
+      y con base en la información proporcionada, será necesario realizar un total de
+      <strong>${D_r}</strong> evaluaciones de higiene de manos durante los próximos 30 días.
     </p>
 
     <p>
