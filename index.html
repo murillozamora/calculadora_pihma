@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora PIHMA - ÓOAD Colima</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <h1>Calculadora de Planeación de Supervisiones de Higiene de Manos (PIHMA)</h1>
+      <h2>ÓOAD Colima - JSPM</h2>
+      <p class="instructions">
+        Instrucciones: Para obtener una estimación personalizada del número de supervisiones de higiene de manos
+        que deben realizarse en su servicio y turno durante los próximos 30 días, responda cada una de las
+        siguientes preguntas con base en su contexto real de trabajo.
+      </p>
+    </header>
+
+    <main>
+      <!-- 1. Hospital -->
+      <div class="form-group">
+        <label for="hospital">
+          1. Seleccione el hospital en el que evaluará el cumplimiento de higiene de manos:
+        </label>
+        <select id="hospital">
+          <option value="">Seleccione una opción</option>
+          <option value="HGZ1">HGZ 1 Villa de Álvarez</option>
+          <option value="HGZ10">HGZ 10 Manzanillo</option>
+          <option value="HGSZ4">HGSZ 4 Tecomán</option>
+        </select>
+      </div>
+
+      <!-- 2. División -->
+      <div class="form-group">
+        <label for="division">
+          2. Seleccione la División del hospital en la que evaluará el cumplimiento de higiene de manos:
+        </label>
+        <select id="division">
+          <option value="">Seleccione una opción</option>
+          <option value="Cirugía">Cirugía</option>
+          <option value="Ginecología">Ginecología y Obstetricia</option>
+          <option value="Medicina Interna">Medicina Interna</option>
+          <option value="Pediatría">Pediatría</option>
+        </select>
+      </div>
+
+      <!-- 3. Servicio -->
+      <div class="form-group">
+        <label for="servicio">
+          3. Seleccione el Servicio en el que se evaluará el cumplimiento de higiene de manos:
+        </label>
+        <select id="servicio">
+          <option value="">Primero seleccione una División</option>
+        </select>
+      </div>
+
+      <!-- 4. Número de compañeras y compañeros -->
+      <div class="form-group">
+        <label for="num-personal">
+          4. Indique cuántas compañeras y compañeros, en promedio y en un día habitual en el servicio y turno a evaluar,
+          se encuentran presentes y pueden ser supervisados:
+        </label>
+        <input type="number" id="num-personal" min="1" inputmode="numeric" />
+      </div>
+
+      <!-- 5. Oportunidades por bloque -->
+      <div class="form-group">
+        <label for="oportunidades-bloque">
+          5. Suponiendo que realizará las evaluaciones en bloques de 30 minutos, indique cuántas oportunidades de higiene
+          de manos considera factible evaluar en cada bloque:
+        </label>
+        <select id="oportunidades-bloque">
+          <option value="">Seleccione una opción</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+      </div>
+
+      <!-- 6. Días hábiles -->
+      <div class="form-group">
+        <label for="dias-habiles">
+          6. A partir del día de hoy y durante los próximos 30 días naturales (un mes), indique cuántos días hábiles
+          dedicará a la supervisión de higiene de manos:
+        </label>
+        <input type="number" id="dias-habiles" min="1" max="30" inputmode="numeric" />
+      </div>
+
+      <!-- 7. Botón -->
+      <div class="form-group button-group">
+        <button id="btn-calcular">Realizar el cálculo</button>
+      </div>
+
+      <!-- Resultado -->
+      <section id="resultado" class="resultado oculto"></section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
