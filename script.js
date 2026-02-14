@@ -126,23 +126,21 @@ btnCalcular.addEventListener("click", () => {
     <p><strong>Resultado de la planeación operativa</strong></p>
 
     <p>
-      En términos prácticos, y con base en la información que usted proporcionó, para cumplir con la cuota mínima de
-      evaluaciones de higiene de manos durante los próximos 30 días deberá realizar un total de 
-      <strong>${D_r}</strong> evaluaciones, distribuidas en <strong>${E_r}</strong> bloques de trabajo de 30 minutos 
-      de duración cada uno.
+      Con base en la información proporcionada, para cumplir con la cuota mínima de evaluaciones de higiene de manos
+      durante los próximos 30 días será necesario realizar un total de <strong>${D_r}</strong> evaluaciones.
     </p>
 
     <p>
-      Cada <strong>bloque de trabajo</strong> corresponde a un periodo de 30 minutos en el que usted deberá supervisar 
-      aproximadamente <strong>${oportunidadesBloque}</strong> oportunidades de higiene de manos. Esto permite organizar 
-      la supervisión en segmentos manejables y comparables entre sí.
+      Estas evaluacioees se organizan en <strong>${E_r}</strong> bloques de 30 minutos, equivalentes a un promedio de 
+      <strong>${F_r}</strong> bloques por día hábil, cada uno con aproximadamente 
+      <strong>${oportunidadesBloque}</strong> oportunidades de observación, distribuidos a lo largo de 
+      <strong>${diasHabiles}</strong> días.
     </p>
 
     <p>
       Para asegurar que las observaciones sean representativas y no se concentren siempre en las mismas personas o momentos,
-      es importante seleccionar las oportunidades de manera aleatoria y equilibrada. Basta con variar intencionalmente los 
-      horarios, los trayectos dentro del servicio y las personas observadas, evitando patrones fijos o preferencias personales.
-      Así se garantiza que las observaciones reflejen de forma justa y realista la actividad cotidiana del servicio.
+      basta con variar intencionalmente los horarios, los trayectos dentro del servicio y las personas observadas, evitando
+      patrones fijos o preferencias personales.
     </p>
   `;
 
