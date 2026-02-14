@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Calculadora PIHMA - ÓOAD Colima</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <div class="app-container">
@@ -22,22 +23,18 @@
 
       <!-- 1. Hospital -->
       <div class="form-group">
-        <label for="hospital">
-          1. Seleccione el hospital en el que evaluará el cumplimiento de higiene de manos:
-        </label>
+        <label for="hospital">1. Seleccione el hospital:</label>
         <select id="hospital">
           <option value="">Seleccione una opción</option>
-          <option value="HGZ1">HGZ 1 Villa de Álvarez</option>
-          <option value="HGZ10">HGZ 10 Manzanillo</option>
-          <option value="HGSZ4">HGSZ 4 Tecomán</option>
+          <option value="HGZ 1 Villa de Álvarez">HGZ 1 Villa de Álvarez</option>
+          <option value="HGZ 10 Manzanillo">HGZ 10 Manzanillo</option>
+          <option value="HGSZ 4 Tecomán">HGSZ 4 Tecomán</option>
         </select>
       </div>
 
       <!-- 2. División -->
       <div class="form-group">
-        <label for="division">
-          2. Seleccione la División del hospital en la que evaluará el cumplimiento de higiene de manos:
-        </label>
+        <label for="division">2. Seleccione la División:</label>
         <select id="division">
           <option value="">Seleccione una opción</option>
           <option value="Cirugía">Cirugía</option>
@@ -49,9 +46,7 @@
 
       <!-- 3. Servicio -->
       <div class="form-group">
-        <label for="servicio">
-          3. Seleccione el Servicio en el que se evaluará el cumplimiento de higiene de manos:
-        </label>
+        <label for="servicio">3. Seleccione el Servicio:</label>
         <select id="servicio" disabled>
           <option value="">Primero seleccione una División</option>
         </select>
@@ -59,9 +54,7 @@
 
       <!-- 4. Turno -->
       <div class="form-group">
-        <label for="turno">
-          4. Indique en qué turno realizará las evaluaciones de cumplimiento de higiene de manos:
-        </label>
+        <label for="turno">4. Indique el turno:</label>
         <select id="turno">
           <option value="">Seleccione una opción</option>
           <option value="Matutino">Matutino</option>
@@ -71,21 +64,15 @@
         </select>
       </div>
 
-      <!-- 5. Número de personal -->
+      <!-- 5. Personal -->
       <div class="form-group">
-        <label for="num-personal">
-          5. Indique cuántas personas, en promedio y en un día habitual en el servicio y turno a evaluar,
-          se encuentran presentes y pueden ser supervisadas:
-        </label>
+        <label for="num-personal">5. Número de personas presentes:</label>
         <input type="number" id="num-personal" min="1" inputmode="numeric" />
       </div>
 
-      <!-- 6. Oportunidades por bloque -->
+      <!-- 6. Oportunidades -->
       <div class="form-group">
-        <label for="oportunidades-bloque">
-          6. Suponiendo que realizará las evaluaciones en bloques de 30 minutos, indique cuántas oportunidades de higiene
-          de manos considera factible evaluar en cada bloque:
-        </label>
+        <label for="oportunidades-bloque">6. Oportunidades por bloque:</label>
         <select id="oportunidades-bloque">
           <option value="">Seleccione una opción</option>
           <option value="5">5</option>
@@ -99,20 +86,23 @@
 
       <!-- 7. Días hábiles -->
       <div class="form-group">
-        <label for="dias-habiles">
-          7. A partir del día de hoy y durante los próximos 30 días naturales (un mes), indique cuántos días hábiles
-          dedicará a la supervisión de higiene de manos en este servicio y turno específicos:
-        </label>
+        <label for="dias-habiles">7. Días hábiles disponibles:</label>
         <input type="number" id="dias-habiles" min="1" max="30" inputmode="numeric" />
       </div>
 
-      <!-- 8. Botón -->
+      <!-- Botón calcular -->
       <div class="form-group button-group">
         <button id="btn-calcular">Realizar el cálculo</button>
       </div>
 
       <!-- Resultado -->
       <section id="resultado" class="resultado oculto"></section>
+
+      <!-- Botón PDF -->
+      <div class="form-group button-group oculto" id="pdf-container">
+        <button id="btn-pdf">Generar PDF</button>
+      </div>
+
     </main>
   </div>
 
