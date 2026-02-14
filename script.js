@@ -47,19 +47,21 @@ const serviciosPorDivision = {
   ]
 };
 
-// --- Referencias a elementos del DOM ---
+// --- Referencias al DOM ---
 const divisionSelect = document.getElementById("division");
 const servicioSelect = document.getElementById("servicio");
+const turnoSelect = document.getElementById("turno");
 const numPersonalInput = document.getElementById("num-personal");
 const oportunidadesBloqueSelect = document.getElementById("oportunidades-bloque");
 const diasHabilesInput = document.getElementById("dias-habiles");
 const btnCalcular = document.getElementById("btn-calcular");
 const resultadoDiv = document.getElementById("resultado");
 
-// --- Cargar servicios según División seleccionada ---
+// --- Cargar servicios según División ---
 divisionSelect.addEventListener("change", () => {
   const division = divisionSelect.value;
   servicioSelect.innerHTML = "";
+  servicioSelect.disabled = true;
 
   if (!division || !serviciosPorDivision[division]) {
     const opt = document.createElement("option");
@@ -68,6 +70,8 @@ divisionSelect.addEventListener("change", () => {
     servicioSelect.appendChild(opt);
     return;
   }
+
+  servicioSelect.disabled = false;
 
   const placeholder = document.createElement("option");
   placeholder.value = "";
@@ -86,16 +90,20 @@ divisionSelect.addEventListener("change", () => {
   });
 });
 
-// --- Función de cálculo principal ---
+// --- Cálculo ---
 btnCalcular.addEventListener("click", () => {
   const hospital = document.getElementById("hospital").value;
   const division = divisionSelect.value;
   const servicioNombre = servicioSelect.value;
+  const turno = turnoSelect.value;
   const numPersonal = parseFloat(numPersonalInput.value);
   const oportunidadesBloque = parseFloat(oportunidadesBloqueSelect.value);
   const diasHabiles = parseFloat(diasHabilesInput.value);
 
-  if (!hospital || !division || !servicioNombre || !numPersonal || !oportunidadesBloque || !diasHabiles) {
+  if (!hospital || !division || !servicioNombre || !turno ||
+      isNaN(numPersonal) || numPersonal <= 0 ||
+      isNaN(oportunidadesBloque) || oportunidadesBloque <= 0 ||
+      isNaN(diasHabiles) || diasHabiles <= 0) {
     mostrarResultado("Por favor, complete todos los campos antes de realizar el cálculo.", true);
     return;
   }
@@ -110,36 +118,38 @@ btnCalcular.addEventListener("click", () => {
 
   const factorCriticidad = servicioObj.factor;
 
-  // --- Cálculos internos ---
+  // --- Cálculos ---
   const C = numPersonal * tasaObservacion;
   const D = C * factorCriticidad;
   const E = D / oportunidadesBloque;
   const F = E / diasHabiles;
 
-  // --- Redondeo hacia arriba ---
   const D_r = Math.ceil(D);
   const E_r = Math.ceil(E);
   const F_r = Math.ceil(F);
 
-  // --- Resultado visible ---
   const textoResultado = `
     <p><strong>Resultado de la planeación operativa</strong></p>
 
     <p>
-      Con base en la información proporcionada, para cumplir con la cuota mínima de evaluaciones de higiene de manos
-      durante los próximos 30 días será necesario realizar un total de <strong>${D_r}</strong> evaluaciones,
-      organizadas en <strong>${E_r}</strong> bloques de 30 minutos
-      (y cada uno de estos bloques con un mínimo de <strong>${oportunidadesBloque}</strong> oportunidades de observación) cada uno.
+      Para el turno <strong>${turno}</strong>, y con base en la información proporcionada,
+      será necesario realizar un total de <strong>${D_r}</strong> evaluaciones de higiene de manos
+      durante los próximos 30 días.
     </p>
 
     <p>
-      Estos bloques se distribuirán a lo largo de los <strong>${diasHabiles}</strong> días hábiles que usted señaló como disponibles para realizar observaciones.
+      Estas evaluaciones deberán organizarse en <strong>${E_r}</strong> bloques de 30 minutos,
+      cada uno con un mínimo de <strong>${oportunidadesBloque}</strong> oportunidades de observación.
     </p>
 
     <p>
-      <strong>IMPORTANTE:</strong> Para asegurar que las observaciones sean representativas y no se concentren siempre en las mismas personas o momentos,
-      basta con variar intencionalmente los horarios, los trayectos dentro del servicio y las personas observadas, evitando
-      patrones fijos o preferencias personales.
+      Los bloques se distribuirán a lo largo de los <strong>${diasHabiles}</strong> días hábiles
+      que usted indicó como disponibles.
+    </p>
+
+    <p>
+      <strong>IMPORTANTE:</strong> Para asegurar representatividad, varíe intencionalmente los horarios,
+      trayectos dentro del servicio y personas observadas, evitando patrones fijos.
     </p>
   `;
 
@@ -152,9 +162,4 @@ function mostrarResultado(html, esError = false) {
   resultadoDiv.innerHTML = html;
   resultadoDiv.style.color = esError ? "#b00020" : "#222222";
 }
-
-
-
-
-
 
