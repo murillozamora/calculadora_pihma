@@ -130,11 +130,11 @@ btnCalcular.addEventListener("click", () => {
       durante los próximos 30 días será necesario realizar un total de <strong>${D_r}</strong> evaluaciones,
       organizadas en <strong>${E_r}</strong> bloques de 30 minutos
       (y cada uno de estos bloques con un mínimo de <strong>${oportunidadesBloque}</strong> oportunidades de observación).
-      Estas evaluaciones se distribuirán a lo largo de los <strong>${diasHabiles}</strong> días hábiles que usted señaló como disponibles para realizar observaciones.
+      Estos bloques se distribuirán a lo largo de los <strong>${diasHabiles}</strong> días hábiles que usted señaló como disponibles para realizar observaciones.
     </p>
 
     <p>
-      Para asegurar que las observaciones sean representativas y no se concentren siempre en las mismas personas o momentos,
+      <strong>IMPORTANTE:</strong> Para asegurar que las observaciones sean representativas y no se concentren siempre en las mismas personas o momentos,
       basta con variar intencionalmente los horarios, los trayectos dentro del servicio y las personas observadas, evitando
       patrones fijos o preferencias personales.
     </p>
@@ -149,6 +149,7 @@ function mostrarResultado(html, esError = false) {
   resultadoDiv.innerHTML = html;
   resultadoDiv.style.color = esError ? "#b00020" : "#222222";
 }
+
 
 
 
