@@ -19,6 +19,7 @@
     </header>
 
     <main>
+
       <!-- 1. Hospital -->
       <div class="form-group">
         <label for="hospital">
@@ -51,24 +52,38 @@
         <label for="servicio">
           3. Seleccione el Servicio en el que se evaluará el cumplimiento de higiene de manos:
         </label>
-        <select id="servicio">
+        <select id="servicio" disabled>
           <option value="">Primero seleccione una División</option>
         </select>
       </div>
 
-      <!-- 4. Número de compañeras y compañeros -->
+      <!-- 4. Turno -->
+      <div class="form-group">
+        <label for="turno">
+          4. Indique en qué turno realizará las evaluaciones de cumplimiento de higiene de manos:
+        </label>
+        <select id="turno">
+          <option value="">Seleccione una opción</option>
+          <option value="Matutino">Matutino</option>
+          <option value="Vespertino">Vespertino</option>
+          <option value="Nocturno">Nocturno</option>
+          <option value="Jornada Acumulada">Jornada Acumulada</option>
+        </select>
+      </div>
+
+      <!-- 5. Número de personal -->
       <div class="form-group">
         <label for="num-personal">
-          4. Indique cuántas compañeras y compañeros, en promedio y en un día habitual en el servicio y turno a evaluar,
-          se encuentran presentes y pueden ser supervisados:
+          5. Indique cuántas personas, en promedio y en un día habitual en el servicio y turno a evaluar,
+          se encuentran presentes y pueden ser supervisadas:
         </label>
         <input type="number" id="num-personal" min="1" inputmode="numeric" />
       </div>
 
-      <!-- 5. Oportunidades por bloque -->
+      <!-- 6. Oportunidades por bloque -->
       <div class="form-group">
         <label for="oportunidades-bloque">
-          5. Suponiendo que realizará las evaluaciones en bloques de 30 minutos, indique cuántas oportunidades de higiene
+          6. Suponiendo que realizará las evaluaciones en bloques de 30 minutos, indique cuántas oportunidades de higiene
           de manos considera factible evaluar en cada bloque:
         </label>
         <select id="oportunidades-bloque">
@@ -82,16 +97,16 @@
         </select>
       </div>
 
-      <!-- 6. Días hábiles -->
+      <!-- 7. Días hábiles -->
       <div class="form-group">
         <label for="dias-habiles">
-          6. A partir del día de hoy y durante los próximos 30 días naturales (un mes), indique cuántos días hábiles
+          7. A partir del día de hoy y durante los próximos 30 días naturales (un mes), indique cuántos días hábiles
           dedicará a la supervisión de higiene de manos en este servicio y turno específicos:
         </label>
         <input type="number" id="dias-habiles" min="1" max="30" inputmode="numeric" />
       </div>
 
-      <!-- 7. Botón -->
+      <!-- 8. Botón -->
       <div class="form-group button-group">
         <button id="btn-calcular">Realizar el cálculo</button>
       </div>
@@ -104,5 +119,4 @@
   <script src="script.js"></script>
 </body>
 </html>
-
 
