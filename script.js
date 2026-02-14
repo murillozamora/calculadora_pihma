@@ -129,7 +129,7 @@ btnCalcular.addEventListener("click", () => {
       Con base en la información proporcionada, para cumplir con la cuota mínima de evaluaciones de higiene de manos
       durante los próximos 30 días será necesario realizar un total de <strong>${D_r}</strong> evaluaciones,
       organizadas en <strong>${E_r}</strong> bloques de 30 minutos
-      <strong>(y cada uno de estos bloques con un mínimo de ${oportunidadesBloque} oportunidades de observación)</strong>.
+      (y cada uno de estos bloques con un mínimo de ${oportunidadesBloque} <strong>oportunidades</strong> de observación).
     </p>
 
     <p>
@@ -148,4 +148,5 @@ function mostrarResultado(html, esError = false) {
   resultadoDiv.innerHTML = html;
   resultadoDiv.style.color = esError ? "#b00020" : "#222222";
 }
+
 
