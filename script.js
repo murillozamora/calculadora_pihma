@@ -54,6 +54,8 @@ const oportunidadesBloqueSelect = document.getElementById("oportunidades-bloque"
 const diasHabilesInput = document.getElementById("dias-habiles");
 const btnCalcular = document.getElementById("btn-calcular");
 const resultadoDiv = document.getElementById("resultado");
+const pdfContainer = document.getElementById("pdf-container");
+const btnPDF = document.getElementById("btn-pdf");
 
 // --- Cargar servicios ---
 divisionSelect.addEventListener("change", () => {
@@ -89,6 +91,8 @@ divisionSelect.addEventListener("change", () => {
 });
 
 // --- Cálculo ---
+let datosCalculo = null;
+
 btnCalcular.addEventListener("click", () => {
   const hospital = document.getElementById("hospital").value;
   const division = divisionSelect.value;
@@ -103,6 +107,7 @@ btnCalcular.addEventListener("click", () => {
       isNaN(oportunidadesBloque) || oportunidadesBloque <= 0 ||
       isNaN(diasHabiles) || diasHabiles <= 0) {
     mostrarResultado("Por favor, complete todos los campos antes de realizar el cálculo.", true);
+    pdfContainer.classList.add("oculto");
     return;
   }
 
@@ -111,6 +116,7 @@ btnCalcular.addEventListener("click", () => {
 
   if (!servicioObj) {
     mostrarResultado("No se encontró el servicio seleccionado. Verifique la selección.", true);
+    pdfContainer.classList.add("oculto");
     return;
   }
 
@@ -123,6 +129,22 @@ btnCalcular.addEventListener("click", () => {
 
   const D_r = Math.ceil(D);
   const E_r = Math.ceil(E);
+  const F_r = Math.ceil(F);
+
+  datosCalculo = {
+    fecha: new Date(),
+    hospital,
+    division,
+    servicioNombre,
+    turno,
+    numPersonal,
+    oportunidadesBloque,
+    diasHabiles,
+    tasaObservacion,
+    factorCriticidad,
+    C, D, E, F,
+    D_r, E_r, F_r
+  };
 
   const textoResultado = `
     <p><strong>Resultado de la planeación operativa</strong></p>
@@ -150,6 +172,7 @@ btnCalcular.addEventListener("click", () => {
   `;
 
   mostrarResultado(textoResultado, false);
+  pdfContainer.classList.remove("oculto");
 });
 
 // --- Mostrar resultado ---
@@ -159,3 +182,74 @@ function mostrarResultado(html, esError = false) {
   resultadoDiv.style.color = esError ? "#b00020" : "#222222";
 }
 
+// --- Generar PDF ---
+btnPDF.addEventListener("click", () => {
+  if (!datosCalculo) return;
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: "mm", format: "a4" });
+
+  const fechaStr = datosCalculo.fecha.toLocaleString("es-MX", {
+    dateStyle: "full",
+    timeStyle: "short"
+  });
+
+  let y = 15;
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(12);
+  doc.text("Planeación de Supervisiones de Higiene de Manos (PIHMA)", 105, y, { align: "center" });
+  y += 8;
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.text(`Fecha y hora del cálculo: ${fechaStr}`, 15, y);
+  y += 10;
+
+  doc.setFont("helvetica", "bold");
+  doc.text("Datos proporcionados por el usuario:", 15, y);
+  y += 6;
+
+  doc.setFont("helvetica", "normal");
+  const datos = [
+    `Hospital: ${datosCalculo.hospital}`,
+    `División: ${datosCalculo.division}`,
+    `Servicio: ${datosCalculo.servicioNombre}`,
+    `Turno: ${datosCalculo.turno}`,
+    `Personal presente: ${datosCalculo.numPersonal}`,
+    `Oportunidades por bloque: ${datosCalculo.oportunidadesBloque}`,
+    `Días hábiles disponibles: ${datosCalculo.diasHabiles}`
+  ];
+
+  datos.forEach(linea => {
+    doc.text(linea, 20, y);
+    y += 6;
+  });
+
+  y += 4;
+  doc.setFont("helvetica", "bold");
+  doc.text("Resultados del cálculo:", 15, y);
+  y += 6;
+
+  doc.setFont("helvetica", "normal");
+  const resultados = [
+    `Evaluaciones requeridas (D): ${datosCalculo.D_r}`,
+    `Bloques de observación (E): ${datosCalculo.E_r}`,
+    `Bloques por día (F): ${datosCalculo.F_r}`
+  ];
+
+  resultados.forEach(linea => {
+    doc.text(linea, 20, y);
+    y += 6;
+  });
+
+  y += 10;
+  doc.setFont("helvetica", "italic");
+  doc.text(
+    "Nota: Para asegurar representatividad, varíe horarios, trayectos y personas observadas.",
+    15,
+    y
+  );
+
+  doc.save("PIHMA_Calculo.pdf");
+});
