@@ -22,7 +22,6 @@
 
     <main>
 
-      <!-- 1. Hospital -->
       <div class="form-group">
         <label for="hospital">1. Seleccione el hospital:</label>
         <select id="hospital">
@@ -33,7 +32,6 @@
         </select>
       </div>
 
-      <!-- 2. División -->
       <div class="form-group">
         <label for="division">2. Seleccione la División:</label>
         <select id="division">
@@ -45,7 +43,6 @@
         </select>
       </div>
 
-      <!-- 3. Servicio -->
       <div class="form-group">
         <label for="servicio">3. Seleccione el Servicio:</label>
         <select id="servicio" disabled>
@@ -53,7 +50,6 @@
         </select>
       </div>
 
-      <!-- 4. Turno -->
       <div class="form-group">
         <label for="turno">4. Indique el turno:</label>
         <select id="turno">
@@ -65,15 +61,13 @@
         </select>
       </div>
 
-      <!-- 5. Personal -->
       <div class="form-group">
-        <label for="num-personal">5. En un día laboral típico, ¿cuántas compañeras y compañeros en total (personal médico, enfermería, becario, etc.) suelen estar presentes en el servicio y turno a evaluar?:</label>
-        <input type="number" id="num-personal" min="1" inputmode="numeric" />
+        <label for="num-personal">5. En un día laboral típico, ¿cuántas compañeras y compañeros en total (personal médico, enfermería, becario, etc.) suelen estar presentes en el servicio y turno a evaluar?</label>
+        <input type="number" id="num-personal" min="1" max="500" inputmode="numeric" />
       </div>
 
-      <!-- 6. Oportunidades -->
       <div class="form-group">
-        <label for="oportunidades-bloque">6. En beneficio de la representividad de las evaluaciones, le sugerimos trabajar en bloques de 30 minutos. ¿Cuántas oportunidades de higiene de manos considera posible evaluar en cada uno de estos?:</label>
+        <label for="oportunidades-bloque">6. En beneficio de la representatividad de las evaluaciones, le sugerimos trabajar en bloques de 30 minutos. ¿Cuántas oportunidades de higiene de manos considera posible evaluar en cada uno de estos?</label>
         <select id="oportunidades-bloque">
           <option value="">Seleccione una opción</option>
           <option value="5">5</option>
@@ -85,36 +79,36 @@
         </select>
       </div>
 
-<!-- 7. Días hábiles -->
-<div class="form-group">
-  <label for="dias-habiles">
-    7. En los próximos 30 días (un mes), ¿en cuántos días hábiles en total realizará evaluaciones de oportunidades de higiene de manos?:
-  </label>
+      <div class="form-group">
+        <label for="dias-habiles">7. En los próximos 30 días (un mes), ¿en cuántos días hábiles en total realizará evaluaciones de oportunidades de higiene de manos?</label>
+        <select id="dias-habiles"></select>
+      </div>
 
-  <select id="dias-habiles"></select>
-</div>
+      <script>
+        const diasHabilesSelect = document.getElementById("dias-habiles");
+        diasHabilesSelect.innerHTML = "";
 
-<script>
-// Generar opciones del 1 al 22 (máximo típico de días hábiles)
-const select = document.getElementById("dias-habiles");
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.textContent = "Seleccione una opción";
+        placeholder.disabled = true;
+        placeholder.selected = true;
+        diasHabilesSelect.appendChild(placeholder);
 
-for (let i = 1; i <= 22; i++) {
-    const opcion = document.createElement("option");
-    opcion.value = i;
-    opcion.textContent = i;
-    select.appendChild(opcion);
-}
-</script>
+        for (let i = 1; i <= 22; i++) {
+          const opt = document.createElement("option");
+          opt.value = i;
+          opt.textContent = i;
+          diasHabilesSelect.appendChild(opt);
+        }
+      </script>
 
-      <!-- Botón calcular -->
       <div class="form-group button-group">
         <button id="btn-calcular" class="btn">Realizar el cálculo</button>
       </div>
 
-      <!-- Resultado -->
       <section id="resultado" class="resultado oculto"></section>
 
-      <!-- Botón PDF -->
       <div class="form-group button-group oculto" id="pdf-container">
         <button id="btn-pdf" class="btn">Generar PDF</button>
       </div>
