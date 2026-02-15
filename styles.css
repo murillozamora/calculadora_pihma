@@ -92,7 +92,8 @@ input[type="number"]:focus {
   margin-top: 1rem;
 }
 
-button#btn-calcular {
+/* --- Botones reutilizables --- */
+.btn {
   background-color: var(--imss-green);
   color: #ffffff;
   border: none;
@@ -104,9 +105,14 @@ button#btn-calcular {
   transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-button#btn-calcular:hover {
+.btn:hover {
   background-color: var(--imss-green-dark);
   transform: translateY(-1px);
+}
+
+/* Botón secundario (si lo necesitas en el futuro) */
+.btn-secondary {
+  background-color: #004b32;
 }
 
 .resultado {
@@ -117,6 +123,11 @@ button#btn-calcular:hover {
   border-left: 4px solid var(--imss-green);
   font-size: 0.95rem;
   line-height: 1.5;
+}
+
+/* Espaciado entre párrafos del resultado */
+.resultado p + p {
+  margin-top: 0.6rem;
 }
 
 .oculto {
@@ -136,8 +147,7 @@ button#btn-calcular:hover {
     padding: 0.7rem;
     font-size: 1rem;
   }
-  button#btn-calcular {
+  .btn {
     width: 100%;
   }
 }
-
