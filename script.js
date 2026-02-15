@@ -104,6 +104,12 @@ divisionSelect.addEventListener("change", () => {
 let datosCalculo = null;
 
 btnCalcular.addEventListener("click", () => {
+
+  if (!validarPersonal()) {
+    pdfContainer.classList.add("oculto");
+    return;
+  }
+
   const hospital = document.getElementById("hospital").value;
   const division = divisionSelect.value;
   const servicioNombre = servicioSelect.value;
