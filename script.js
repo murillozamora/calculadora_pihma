@@ -1,5 +1,3 @@
-// --- Datos base ---
-
 const tasasDivision = {
   "Medicina Interna": 0.828,
   "Cirugía": 1.337,
@@ -45,7 +43,6 @@ const serviciosPorDivision = {
   ]
 };
 
-// --- DOM ---
 const divisionSelect = document.getElementById("division");
 const servicioSelect = document.getElementById("servicio");
 const turnoSelect = document.getElementById("turno");
@@ -57,7 +54,14 @@ const resultadoDiv = document.getElementById("resultado");
 const pdfContainer = document.getElementById("pdf-container");
 const btnPDF = document.getElementById("btn-pdf");
 
-// --- Generar opciones de días hábiles (1 a 22) ---
+diasHabilesInput.innerHTML = "";
+const placeholderDias = document.createElement("option");
+placeholderDias.value = "";
+placeholderDias.textContent = "Seleccione una opción";
+placeholderDias.disabled = true;
+placeholderDias.selected = true;
+diasHabilesInput.appendChild(placeholderDias);
+
 for (let i = 1; i <= 22; i++) {
   const opt = document.createElement("option");
   opt.value = i;
@@ -65,7 +69,6 @@ for (let i = 1; i <= 22; i++) {
   diasHabilesInput.appendChild(opt);
 }
 
-// --- Cargar servicios ---
 divisionSelect.addEventListener("change", () => {
   const division = divisionSelect.value;
   servicioSelect.innerHTML = "";
@@ -98,7 +101,6 @@ divisionSelect.addEventListener("change", () => {
   });
 });
 
-// --- Cálculo ---
 let datosCalculo = null;
 
 btnCalcular.addEventListener("click", () => {
@@ -156,41 +158,22 @@ btnCalcular.addEventListener("click", () => {
 
   const textoResultado = `
     <p><strong>Resultado de la planeación operativa</strong></p>
-
-    <p>
-      Para el servicio de <strong>${servicioNombre}</strong>, turno <strong>${turno}</strong>,
-      y con base en la información proporcionada, será necesario realizar un total de
-      <strong>${D_r}</strong> evaluaciones de higiene de manos durante los próximos 30 días.
-    </p>
-
-    <p>
-      Estas evaluaciones deberán organizarse en <strong>${E_r}</strong> bloques de 30 minutos,
-      cada uno con un mínimo de <strong>${oportunidadesBloque}</strong> oportunidades de observación.
-    </p>
-
-    <p>
-      Los bloques se distribuirán a lo largo de los <strong>${diasHabiles}</strong> días hábiles
-      que usted indicó como disponibles.
-    </p>
-
-    <p>
-      <strong>IMPORTANTE:</strong> Para asegurar representatividad, varíe intencionalmente los horarios,
-      trayectos dentro del servicio y personas observadas, evitando patrones fijos.
-    </p>
+    <p>Para el servicio de <strong>${servicioNombre}</strong>, turno <strong>${turno}</strong>, será necesario realizar un total de <strong>${D_r}</strong> evaluaciones de higiene de manos durante los próximos 30 días.</p>
+    <p>Estas evaluaciones deberán organizarse en <strong>${E_r}</strong> bloques de 30 minutos, cada uno con un mínimo de <strong>${oportunidadesBloque}</strong> oportunidades de observación.</p>
+    <p>Los bloques se distribuirán a lo largo de los <strong>${diasHabiles}</strong> días hábiles disponibles.</p>
+    <p><strong>IMPORTANTE:</strong> Varíe horarios, trayectos y personas observadas para asegurar representatividad.</p>
   `;
 
   mostrarResultado(textoResultado, false);
   pdfContainer.classList.remove("oculto");
 });
 
-// --- Mostrar resultado ---
 function mostrarResultado(html, esError = false) {
   resultadoDiv.classList.remove("oculto");
   resultadoDiv.innerHTML = html;
   resultadoDiv.style.color = esError ? "#b00020" : "#222222";
 }
 
-// --- Generar PDF ---
 btnPDF.addEventListener("click", () => {
   if (!datosCalculo) return;
 
@@ -243,17 +226,14 @@ btnPDF.addEventListener("click", () => {
 
   const textoCompleto = [
     `Para el servicio de ${datosCalculo.servicioNombre}, turno ${datosCalculo.turno},`,
-    `y con base en la información proporcionada, será necesario realizar un total de`,
-    `${datosCalculo.D_r} evaluaciones de higiene de manos durante los próximos 30 días.`,
+    `será necesario realizar un total de ${datosCalculo.D_r} evaluaciones de higiene de manos.`,
     ``,
     `Estas evaluaciones deberán organizarse en ${datosCalculo.E_r} bloques de 30 minutos,`,
-    `cada uno con un mínimo de ${datosCalculo.oportunidadesBloque} oportunidades de observación.`,
+    `cada uno con un mínimo de ${datosCalculo.oportunidadesBloque} oportunidades.`,
     ``,
-    `Los bloques se distribuirán a lo largo de los ${datosCalculo.diasHabiles} días hábiles`,
-    `que usted indicó como disponibles.`,
+    `Los bloques se distribuirán a lo largo de los ${datosCalculo.diasHabiles} días hábiles disponibles.`,
     ``,
-    `IMPORTANTE: Para asegurar representatividad, varíe intencionalmente los horarios,`,
-    `trayectos dentro del servicio y personas observadas, evitando patrones fijos.`
+    `IMPORTANTE: Varíe horarios, trayectos y personas observadas.`
   ];
 
   textoCompleto.forEach(linea => {
