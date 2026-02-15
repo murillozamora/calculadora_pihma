@@ -1,4 +1,3 @@
-/* Verde institucional aproximado IMSS */
 :root {
   --imss-green: #006341;
   --imss-green-dark: #004b32;
@@ -87,12 +86,18 @@ input[type="number"]:focus {
   box-shadow: 0 0 0 2px rgba(0, 99, 65, 0.2);
 }
 
+.error-msg {
+  color: #b00020;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  display: none;
+}
+
 .button-group {
   text-align: center;
   margin-top: 1rem;
 }
 
-/* --- Botones reutilizables --- */
 .btn {
   background-color: var(--imss-green);
   color: #ffffff;
@@ -110,7 +115,6 @@ input[type="number"]:focus {
   transform: translateY(-1px);
 }
 
-/* Botón secundario (si lo necesitas en el futuro) */
 .btn-secondary {
   background-color: #004b32;
 }
@@ -125,7 +129,6 @@ input[type="number"]:focus {
   line-height: 1.5;
 }
 
-/* Espaciado entre párrafos del resultado */
 .resultado p + p {
   margin-top: 0.6rem;
 }
@@ -134,7 +137,6 @@ input[type="number"]:focus {
   display: none;
 }
 
-/* Ajustes móviles */
 @media (max-width: 480px) {
   h1 {
     font-size: 1.2rem;
