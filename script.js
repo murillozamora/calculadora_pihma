@@ -57,6 +57,14 @@ const resultadoDiv = document.getElementById("resultado");
 const pdfContainer = document.getElementById("pdf-container");
 const btnPDF = document.getElementById("btn-pdf");
 
+// --- Generar opciones de días hábiles (1 a 22) ---
+for (let i = 1; i <= 22; i++) {
+  const opt = document.createElement("option");
+  opt.value = i;
+  opt.textContent = i;
+  diasHabilesInput.appendChild(opt);
+}
+
 // --- Cargar servicios ---
 divisionSelect.addEventListener("change", () => {
   const division = divisionSelect.value;
