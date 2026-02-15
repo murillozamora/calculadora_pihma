@@ -198,7 +198,7 @@ btnPDF.addEventListener("click", () => {
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(12);
-  doc.text("Planeación de Supervisiones de Higiene de Manos (PIHMA)", 105, y, { align: "center" });
+  doc.text("Planeación de Supervisiones de Higiene de Manos (PIHMA)", 15, y);
   y += 8;
 
   doc.setFont("helvetica", "normal");
@@ -210,7 +210,6 @@ btnPDF.addEventListener("click", () => {
   doc.text("Datos proporcionados por el usuario:", 15, y);
   y += 6;
 
-  doc.setFont("helvetica", "normal");
   const datos = [
     `Hospital: ${datosCalculo.hospital}`,
     `División: ${datosCalculo.division}`,
@@ -221,35 +220,38 @@ btnPDF.addEventListener("click", () => {
     `Días hábiles disponibles: ${datosCalculo.diasHabiles}`
   ];
 
+  doc.setFont("helvetica", "normal");
   datos.forEach(linea => {
     doc.text(linea, 20, y);
     y += 6;
   });
 
-  y += 4;
+  y += 6;
   doc.setFont("helvetica", "bold");
   doc.text("Resultados del cálculo:", 15, y);
-  y += 6;
+  y += 8;
 
   doc.setFont("helvetica", "normal");
-  const resultados = [
-    `Evaluaciones requeridas (D): ${datosCalculo.D_r}`,
-    `Bloques de observación (E): ${datosCalculo.E_r}`,
-    `Bloques por día (F): ${datosCalculo.F_r}`
+
+  const textoCompleto = [
+    `Para el servicio de ${datosCalculo.servicioNombre}, turno ${datosCalculo.turno},`,
+    `y con base en la información proporcionada, será necesario realizar un total de`,
+    `${datosCalculo.D_r} evaluaciones de higiene de manos durante los próximos 30 días.`,
+    ``,
+    `Estas evaluaciones deberán organizarse en ${datosCalculo.E_r} bloques de 30 minutos,`,
+    `cada uno con un mínimo de ${datosCalculo.oportunidadesBloque} oportunidades de observación.`,
+    ``,
+    `Los bloques se distribuirán a lo largo de los ${datosCalculo.diasHabiles} días hábiles`,
+    `que usted indicó como disponibles.`,
+    ``,
+    `IMPORTANTE: Para asegurar representatividad, varíe intencionalmente los horarios,`,
+    `trayectos dentro del servicio y personas observadas, evitando patrones fijos.`
   ];
 
-  resultados.forEach(linea => {
-    doc.text(linea, 20, y);
+  textoCompleto.forEach(linea => {
+    doc.text(linea, 15, y);
     y += 6;
   });
-
-  y += 10;
-  doc.setFont("helvetica", "italic");
-  doc.text(
-    "Nota: Para asegurar representatividad, varíe horarios, trayectos y personas observadas.",
-    15,
-    y
-  );
 
   doc.save("PIHMA_Calculo.pdf");
 });
